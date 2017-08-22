@@ -171,7 +171,7 @@ void insert(struct student s[]){
 }
 
 void delete(struct student s[]){
-    int id,i, flag =0;
+    int id,i,index,flag =0;
     printf("Enter the id you want to delete: \n");
     scanf("%d", &id);
     fflush(stdin);
@@ -181,10 +181,18 @@ void delete(struct student s[]){
     for(i=0; i<num; i++)
     {   if(id == s[i].id){
             flag=1;
-            s[i].id = 0;
+            //s[i].id = 0;
+            index = i;
         }
     }
-    fwrite(s, sizeof(struct student), i, file);
+
+    for(; i<num-1; i++)
+    {
+        s[i]= s[i+1];
+    }
+
+    num= num-1;
+    fwrite(s, sizeof(struct student), num, file);
     fclose(file);
     if(flag==0){
         printf("Not found the searched id \n");
@@ -200,7 +208,7 @@ void output(struct student s[]){
     int n = fread(s, sizeof(struct student), 100, file);
 
     for(i=0; i<n; i++)
-    {   if(s[i].id!=0){
+    {
             printf("Name: ");puts(s[i].name);
             printf("Id: %d\n", s[i].id);
             printf("Father's name: ");puts(s[i].father);
@@ -209,8 +217,8 @@ void output(struct student s[]){
             printf("Address: ");puts(s[i].address);
             printf("Blood group: ");puts(s[i].blood_group);
             printf("Major course: ");puts(s[i].major);
-            printf("CGPA: %.2f\n", s[i].cgpa);
-        }
+            printf("CGPA: %.2f\n\n", s[i].cgpa);
+
     }
     fclose(file);
 
@@ -263,7 +271,7 @@ void main()
         menu();
     }else{
         num = fread(s, sizeof(struct student), 100, file);
-        printf("%d", num);
+        //printf("%d", num);
         menu();
     }
     fclose(file);
