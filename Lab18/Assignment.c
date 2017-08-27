@@ -165,7 +165,7 @@ void insert(struct student s[]){
         printf("\n");
     }
     num+=n;
-    printf("%d",num);
+    //printf("%d",num);
     fwrite(s, sizeof(struct student), num, file);
     fclose(file);
 }
@@ -186,7 +186,7 @@ void delete(struct student s[]){
         }
     }
 
-    for(; i<num-1; i++)
+    for(i=index; i<num-1; i++)
     {
         s[i]= s[i+1];
     }
